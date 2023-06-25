@@ -23,7 +23,9 @@ namespace Go_Saku.Net.Controllers
         public ActionResult<IEnumerable<User>> GetAllUsers()
         {
             var users = _userUsecase.FindAllUsers();
-            return Ok(users);
+            ResponseUtils.JSONSuccess(HttpContext, true, (int)HttpStatusCode.OK, users);
+
+            return new EmptyResult();
         }
 
         [HttpGet("name/{username}")]
@@ -89,7 +91,9 @@ namespace Go_Saku.Net.Controllers
             // Panggil use case untuk membuat pengguna
             string result = await _userUsecase.CreateUser(userDto);
 
-            return Ok(result);
+            ResponseUtils.JSONSuccess(HttpContext, true, (int)HttpStatusCode.Created, result);
+
+            return new EmptyResult();
         }
 
         private bool IsValidPassword(string password)
